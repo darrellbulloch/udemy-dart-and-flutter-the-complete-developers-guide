@@ -26,7 +26,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
 
     catController = AnimationController(
       // overall duration of the animation
-      duration: Duration(seconds: 2),
+      duration: Duration(milliseconds: 200),
       // TickerProvider - tells AnimationController to progress the animation to the next frame, by updating the Animation variable
       // Must define this class as a TicketProvider by implementing TickerProviderStateMixin
       vsync: this,
@@ -34,7 +34,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
 
     // animate the Cat's vertical position from 0px to 100px
     // Note that the Tween object is not saved as part of the state - it is not needed later
-    catAnimation = Tween(begin: 0.0, end: 100.0).animate(
+    catAnimation = Tween(begin: -35.0, end: -80.0).animate(
       // Rate at which animation will occur
       CurvedAnimation(
         parent: catController,
@@ -73,9 +73,10 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
         // Centers the Stack, but not the contents of the Stack
         child: Center(
           child: Stack(
+            overflow: Overflow.visible,
             children: <Widget>[
-              buildBox(),
               buildCatAnimation(),
+              buildBox(),
             ],
           ),
         ),
@@ -101,7 +102,7 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
         // without attempting to change the dimensions of the stack
         return Positioned(
           child: child,
-          bottom: catAnimation.value,
+          top: catAnimation.value,
           right: 0.0,
           left: 0.0,
         );

@@ -19,6 +19,7 @@ A new Flutter project.
 - [GestureDetector](https://docs.flutter.io/flutter/widgets/GestureDetector-class.html)
 - [Image](https://docs.flutter.io/flutter/dart-ui/Image-class.html)
 - [MaterialApp](https://docs.flutter.io/flutter/material/MaterialApp-class.html)
+- [Overflow enum](https://docs.flutter.io/flutter/rendering/Overflow-class.html)
 - [Positioned](https://docs.flutter.io/flutter/widgets/Positioned-class.html)
 - [Scaffold](https://docs.flutter.io/flutter/material/Scaffold-class.html)
 - [Stack](https://docs.flutter.io/flutter/widgets/Stack-class.html)
