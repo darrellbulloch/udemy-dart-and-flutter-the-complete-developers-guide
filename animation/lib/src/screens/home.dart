@@ -42,8 +42,22 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
       ),
     );
 
-    // start the animation
-    catController.forward();
+    // start the animation when the app finishes loading
+    //catController.forward();
+  }
+
+  onTap() {
+    switch (catController.status) {
+      case AnimationStatus.dismissed: // not yet started
+        // start the animation on tap of screen
+        catController.forward();
+        break;
+      case AnimationStatus.completed:
+        catController.reverse();
+        break;
+      default:
+        break;
+    }
   }
 
   @override
@@ -52,7 +66,11 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text("Animation!"),
       ),
-      body: buildAnimation(),
+      body: GestureDetector(
+        // A Gesture bubbles up to the widget that defines it
+        child: buildAnimation(),
+        onTap: onTap,
+      ),
     );
   }
 
