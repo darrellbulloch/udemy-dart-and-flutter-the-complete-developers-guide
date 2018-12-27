@@ -49,10 +49,12 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
   onTap() {
     switch (catController.status) {
       case AnimationStatus.dismissed: // not yet started
+      case AnimationStatus.reverse: // in reverse
         // start the animation on tap of screen
         catController.forward();
         break;
       case AnimationStatus.completed:
+      case AnimationStatus.forward: // going forwards
         catController.reverse();
         break;
       default:
@@ -66,15 +68,23 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text("Animation!"),
       ),
+      // A Gesture bubbles up to the widget that defines it
       body: GestureDetector(
-        // A Gesture bubbles up to the widget that defines it
-        child: buildAnimation(),
+        // Centers the Stack, but not the contents of the Stack
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              buildBox(),
+              buildCatAnimation(),
+            ],
+          ),
+        ),
         onTap: onTap,
       ),
     );
   }
 
-  Widget buildAnimation() {
+  Widget buildCatAnimation() {
     // Unlike StreamBuilder, we don't want to return a new Widget every time
     // the animation occurs, such as 60 times per second
     // the 3rd parameter, child, is needed for this.
@@ -87,6 +97,15 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     return AnimatedBuilder(
       animation: catAnimation,
       builder: (BuildContext context, Widget child) {
+        // Positioned is used to position the widget relative to the Stack
+        // without attempting to change the dimensions of the stack
+        return Positioned(
+          child: child,
+          bottom: catAnimation.value,
+          right: 0.0,
+          left: 0.0,
+        );
+        /*
         return Container(
           child: child,
           // Everytime the animation occurs, the Container is recreated
@@ -95,9 +114,18 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
           // Note that this is where we define the property that is being animated
           margin: EdgeInsets.only(top: catAnimation.value),
         );
+        */
       },
       // This one instance is reused everytime, instead of creating a new one
       child: Cat(),
+    );
+  }
+
+  Widget buildBox() {
+    return Container(
+      height: 200.0,
+      width: 200.0,
+      color: Colors.brown,
     );
   }
 }
