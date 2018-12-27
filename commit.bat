@@ -1,3 +1,3 @@
 git add -u
-git commit -m "Animation"
+git commit -m "Changes"
 git push
